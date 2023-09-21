@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const args = require('yargs').argv;
+const reporter = require('../main')
+
+const formats = [ 'json', 'html', 'text', 'md' ];
+
+const useage = `
+Usage: spdx-license-report [options]
+
+Options:
+  --source      required - Path to the bom.json
+  --format      optional - Report format: ${formats.join(', ')}. Defaults to "json"
+  --outfile     optional - File to write report to. Defaults to "STDOUT"
+  --help        optional - Prints exactly this message
+`
+if( args.help ) {
+    process.stdout.write(useage);
+    return 1;
+} else if( args.source === undefined ) {
+    process.stderr.write('Mandatory --source=FILE is missing')
+    process.stderr.write(useage)
+    return 1;
+} else if( ! fs.existsSync(args.source) ) {
+    process.stderr.write(`File '${args.source}' does not exist\n`);
+    return 1;
+} else if( args.format && ! formats.includes(args.format) ) {
+    process.stderr.write(`Unsupported format ${args.format}\n`)
+    return 1;
+}
+
+const report = reporter.generateReport(fs.readFileSync(args.source, 'utf8'), args.format);
+
+if( args.outfile ) {
+    fs.writeFileSync(args.outfile, report);
+} else {
+    process.stdout.write(report);
+}
