@@ -1,6 +1,6 @@
 {
   "name": "@bestsolution/spdx-license-report",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate a simple license report from SPDX",
   "main": "index.js",
   "bin": {
@@ -18,13 +18,7 @@
   },
   "homepage": "https://github.com/BestSolution-at/spdx-license-report#readme",
   "author": "Tom Schindl",
-  "license": "Apache 2.0",
-  "licenses": [
-    {
-      "type": "Apache-2.0",
-      "url": "https://raw.githubusercontent.com/BestSolution-at/spdx-license-report/main/LICENSE"
-    }
-  ],
+  "license": "Apache-2.0",
   "dependencies": {
     "yargs": "^17.7.2"
   }
